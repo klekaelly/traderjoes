@@ -1,0 +1,32 @@
+query get_new_items(
+  $currentPage: Int = 1
+  $pageSize: Int = 1
+  $storeCode: String = "138"
+  $published: String = "1"
+  $availability: String = "1"
+  $newProduct: String = "1"
+) {
+  products(
+    filter: {
+      store_code: { eq: $storeCode }
+      published: { eq: $published }
+      availability: { match: $availability }
+      new_product: { match: $newProduct }
+    }
+    pageSize: $pageSize
+    currentPage: $currentPage
+  ) {
+    items {
+      sku
+      name
+      retail_price
+      first_published_date
+      popularity
+    }
+    page_info {
+      current_page
+      total_pages
+      page_size
+    }
+  }
+}
